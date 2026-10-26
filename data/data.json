@@ -1,0 +1,134 @@
+[
+    {
+        "id": 1,
+        "title": "Mathématiques",
+        "subject": "Mathématiques",
+        "level": "2e Bac",
+        "price": 350,
+        "seats": 5,
+        "schedule": "Lundi · 17h–19h",
+        "centre": "Nador Centre",
+        "description": "Renforcez les bases, maîtrisez les méthodes et préparez les examens avec un accompagnement progressif."
+    },
+    {
+        "id": 2,
+        "title": "Physique-Chimie",
+        "subject": "Physique-Chimie",
+        "level": "2e Bac",
+        "price": 400,
+        "seats": 0,
+        "schedule": "Mardi · 17h–19h",
+        "centre": "Hay Al Matar",
+        "description": "Travail guidé sur les notions essentielles, les exercices types et la préparation au baccalauréat."
+    },
+    {
+        "id": 3,
+        "title": "Sciences de la Vie et de la Terre",
+        "subject": "SVT",
+        "level": "2e Bac",
+        "price": 350,
+        "seats": 6,
+        "schedule": "Mercredi · 16h–18h",
+        "centre": "Nador Centre",
+        "description": "Comprenez les concepts de SVT et entraînez-vous à répondre avec méthode aux sujets d'examen."
+    },
+    {
+        "id": 4,
+        "title": "Mathématiques",
+        "subject": "Mathématiques",
+        "level": "1re Bac",
+        "price": 300,
+        "seats": 4,
+        "schedule": "Jeudi · 17h–19h",
+        "centre": "Selouane",
+        "description": "Consolidez les notions du programme et gagnez en confiance grâce à des exercices ciblés."
+    },
+    {
+        "id": 5,
+        "title": "Physique-Chimie",
+        "subject": "Physique-Chimie",
+        "level": "1re Bac",
+        "price": 350,
+        "seats": 3,
+        "schedule": "Samedi · 10h–12h",
+        "centre": "Hay Al Matar",
+        "description": "Apprenez à analyser les problèmes et à appliquer les méthodes de résolution pas à pas."
+    },
+    {
+        "id": 6,
+        "title": "Français",
+        "subject": "Français",
+        "level": "Tronc commun",
+        "price": 250,
+        "seats": 8,
+        "schedule": "Lundi · 16h–17h30",
+        "centre": "Nador Centre",
+        "description": "Améliorez votre expression écrite, votre compréhension et vos compétences en communication."
+    },
+    {
+        "id": 7,
+        "title": "Anglais — Débutant",
+        "subject": "Anglais",
+        "level": "Débutant",
+        "price": 280,
+        "seats": 7,
+        "schedule": "Mardi · 16h–17h30",
+        "centre": "Selouane",
+        "description": "Développez les bases de l'anglais avec des activités pratiques et un rythme progressif."
+    },
+    {
+        "id": 8,
+        "title": "Anglais — Intermédiaire",
+        "subject": "Anglais",
+        "level": "Intermédiaire",
+        "price": 320,
+        "seats": 4,
+        "schedule": "Jeudi · 18h–19h30",
+        "centre": "Nador Centre",
+        "description": "Enrichissez votre vocabulaire et gagnez en aisance à l'oral comme à l'écrit."
+    },
+    {
+        "id": 9,
+        "title": "Français",
+        "subject": "Français",
+        "level": "3e année collège",
+        "price": 250,
+        "seats": 5,
+        "schedule": "Mercredi · 17h–18h30",
+        "centre": "Hay Al Matar",
+        "description": "Préparez le programme du collège et développez une méthode efficace pour les évaluations."
+    },
+    {
+        "id": 10,
+        "title": "Mathématiques",
+        "subject": "Mathématiques",
+        "level": "3e année collège",
+        "price": 280,
+        "seats": 2,
+        "schedule": "Vendredi · 16h–18h",
+        "centre": "Selouane",
+        "description": "Révisez les notions clés et entraînez-vous sur des exercices adaptés à votre niveau."
+    },
+    {
+        "id": 11,
+        "title": "Préparation examen régional",
+        "subject": "Préparation",
+        "level": "3e année collège",
+        "price": 300,
+        "seats": 6,
+        "schedule": "Samedi · 14h–16h",
+        "centre": "Nador Centre",
+        "description": "Un programme de révision structuré pour aborder l'examen régional avec sérénité."
+    },
+    {
+        "id": 12,
+        "title": "Préparation au Baccalauréat",
+        "subject": "Préparation",
+        "level": "2e Bac",
+        "price": 450,
+        "seats": 3,
+        "schedule": "Dimanche · 10h–12h",
+        "centre": "Hay Al Matar",
+        "description": "Des séances de préparation ciblées, des sujets d'entraînement et des conseils de méthode."
+    }
+]
