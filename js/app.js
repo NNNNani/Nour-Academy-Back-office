@@ -4,10 +4,10 @@ const app = document.querySelector("#page-content");
 const inscriptions = getState();
 
 app.innerHTML = `
-    <section class="stats">
-        <article class="stat-card">
-            <h2>Total des inscriptions</h2>
-            <p>${inscriptions.length}</p>
+    < section class="stats">
+        < article class="stat-card" >
+            <h2> Total des inscriptions </h2>
+            <p>${ inscriptions.length }</p>
         </article>
     </section>
 
