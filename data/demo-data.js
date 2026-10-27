@@ -260,3 +260,5 @@ const demoData = [
         centre: "Hay Al Matar"
     }
 ];
+
+export default demoData;
