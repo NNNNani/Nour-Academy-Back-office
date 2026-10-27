@@ -10,215 +10,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/app.js" defer></script>
+    <script src="" defer></script>
 </head>
+
 
 <body>
     <header class="site-header">
-        <nav class="nav container" aria-label="Navigation principale">
-            <a class="brand" href="#accueil" aria-label="Nour Academy, accueil"><span
-                    class="brand-mark">N</span><span>Nour Academy</span></a>
-            <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="navLinks"
-                aria-label="Ouvrir le menu">☰</button>
-            <div id="navLinks" class="nav-links"><a href="#panier" class="cart-link">Panier <span
-                        id="cartCount">0</span></a><a class="button button-neon nav-cta"
-                    href="#inscription">S'inscrire</a></div>
-        </nav>
+        
     </header>
     <main>
-        <section id="accueil" class="hero">
-            <div class="hero-shade"></div>
-            <div class="container hero-content"></span>
-                <h1>Chaque élève peut<br><span>réussir son avenir.</span></h1>
-                <p>Des cours de soutien scolaire et de langues adaptés à chaque niveau, pour progresser avec confiance à
-                    Nador.</p>
-                <div class="hero-actions"></a><a </a></div>
-
-            </div>
-        </section>
-        <section id="catalogue" class="section section-light">
-            <div class="container">
-                <div class="section-heading">
-                    <div><span class="section-kicker">Notre catalogue</span>
-                        <h2>Trouvons le cours idéal pour votre enfant.</h2>
-                        <p>Explorez notre sélection et réservez votre place.</p>
-                    </div>
-                </div>
-                <div class="filters"><label class="search-field"><span class="sr-only">Rechercher un cours</span><input
-                            id="filterSearch" type="search" placeholder="Rechercher un cours…"><span
-                            class="sr-only"></span><select id="filterSubject">
-
-                        </select></label></div>
-                <div class="results-line"><span id="resultsCount">Chargement…</span><span>Prix mensuels en MAD</span>
-                </div>
-                <div id="courseGrid" class="course-grid" aria-live="polite">
-                    <p class="loading">Chargement des cours…</p>
-                </div>
-            </div>
-        </section>
-        <section id="panier" class="section cart-section">
-            <div class="container narrow">
-                <div class="section-heading compact">
-                    <div><span class="section-kicker">Votre sélection</span>
-                        <h2>Votre panier</h2>
-                        <p>Vérifiez les cours choisis avant de continuer.</p>
-                    </div>
-                </div>
-                <div class="cart-panel">
-                    <div id="cartEmptyState" class="empty-state">
-                        <div class="empty-icon">＋</div>
-                        <h3>Votre panier est vide</h3>
-                        <p>Sélectionnez des cours depuis le catalogue ci-dessus.</p><a class="text-link"
-                            href="#catalogue">Voir les cours →</a>
-                    </div>
-                    <div id="cartContent" hidden>
-                        <div id="cartItems" class="cart-items"></div>
-                        <div class="cart-total"><span>Total mensuel estimé</span><strong><span id="cartTotal">0</span>
-                                MAD</strong></div><button id="continueRegistration"
-                            class="button button-blue button-full">Continuer vers l'inscription <span>→</span></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="inscription" class="section registration-section">
-            <div class="container narrow">
-                <div class="section-heading centered"><span class="section-kicker"></span>
-                    <h2>l'inscription</h2>
-                </div>
-                <div class="stepper">
-                </div>
-                <form id="regForm" novalidate>
-                    <div class="form-grid">
-                        <!-- معلومات الأب والتلميذ -->
-                        <label>Nom complet du parent
-                            <input id="parentName" name="parentName" autocomplete="name" required placeholder="">
-                            <small class="field-error" id="parentNameError"></small>
-                        </label>
-
-                        <label>Email du parent
-                            <input id="parentEmail" name="parentEmail" type="email" autocomplete="email" required
-                                placeholder="">
-                            <small class="field-error" id="parentEmailError"></small>
-                        </label>
-
-                        <label>Téléphone (Maroc)
-                            <input id="parentPhone" name="parentPhone" type="tel" autocomplete="tel" required
-                                placeholder="">
-                            <small class="field-error" id="parentPhoneError"></small>
-                        </label>
-
-                        <label>Prénom de l'élève
-                            <input id="studentName" name="studentName" required placeholder="">
-                            <small class="field-error" id="studentNameError"></small>
-                        </label>
-
-                        <label class="full-field">Niveau scolaire
-                            <select id="studentLevel" name="studentLevel" required>
-                                <option value="">Choisir le niveau</option>
-                                <option>3e année collège</option>
-                                <option>Tronc commun</option>
-                                <option>1re Bac</option>
-                                <option>2e Bac</option>
-                                <option>Débutant</option>
-                                <option>Intermédiaire</option>
-                            </select>
-                            <small class="field-error" id="studentLevelError"></small>
-                        </label>
-
-                        <!-- كلمة السر -->
-                        <label>Créer un mot de passe
-                            <input id="pwd" name="password" type="password" autocomplete="new-password" required
-                                placeholder="8 caractères minimum">
-                            <small class="field-hint">Au moins 8 caractères, une majuscule, un chiffre et un caractère
-                                spécial.</small>
-                            <div class="strength-row">
-                                <span>Force du mot de passe</span>
-                                <strong id="pwdText">À saisir</strong>
-                            </div>
-                            <div class="strength-track"><span id="pwdBar"></span></div>
-                            <small class="field-error" id="pwdError"></small>
-                        </label>
-
-                        <label>Confirmer le mot de passe
-                            <input id="pwdConfirm" name="passwordConfirm" type="password" autocomplete="new-password"
-                                required placeholder="Répéter le mot de passe">
-                            <small class="field-error" id="pwdConfirmError"></small>
-                        </label>
-                    </div>
-
-                    <!-- الموافقة والزر المباشر -->
-                    <label class="consent-row">
-                        <input id="consent" type="checkbox" required>
-                        <span>J'accepte les conditions et le traitement de mes données pour cette demande, conformément
-                            à la politique de confidentialité de Nour Academy.</span>
-                    </label>
-                    <small class="field-error" id="consentError"></small>
-
-                    <p class="privacy-note">Démo pédagogique : les informations ne sont pas envoyées à un serveur.
-                        N'utilisez pas de vraies données personnelles.</p>
-
-                    <div class="form-actions">
-                        <button type="submit" id="submitForm" class="button button-neon button-full">Confirmer
-                            l'inscription</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-        <section id="centres" class="section section-light">
-            <div class="container">
-                <div class="section-heading centered"><span class="section-kicker">Près de chez vous</span>
-                    <h2>Nos centres</h2>
-                    <p>Choisissez le centre qui vous convient le mieux.</p>
-                </div>
-                <div class="centre-grid">
-                    <article class="centre-card"><span class="centre-number">01</span>
-                        <h3>Nador Centre</h3>
-                        <p>Un espace accessible au cœur de la ville.</p><span class="centre-tag">Nador</span>
-                    </article>
-                    <article class="centre-card"><span class="centre-number">02</span>
-                        <h3>Hay Al Matar</h3>
-                        <p>Un cadre calme pour apprendre et progresser.</p><span class="centre-tag">Nador</span>
-                    </article>
-                    <article class="centre-card"><span class="centre-number">03</span>
-                        <h3>Selouane</h3>
-                        <p>Un accompagnement adapté à chaque niveau.</p><span class="centre-tag">Selouane</span>
-                    </article>
-                </div>
-            </div>
-        </section>
-
+       
     </main>
     <footer class="footer">
         <div class="container footer-inner"></a>
             <small>© 2026 Nour Academy Nador. Anass Ben Abou</small>
         </div>
     </footer>
-    <div id="courseModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="courseModalTitle">
-        <div class="modal-backdrop" data-close-modal></div>
-        <div class="modal-card"><button class="modal-close" data-close-modal aria-label="Fermer">×</button><span
-                class="section-kicker">Détail du cours</span>
-            <h2 id="courseModalTitle"></h2>
-            <p id="courseModalDescription"></p>
-            <div id="courseModalMeta" class="modal-meta"></div><button id="courseModalAdd"
-                class="button button-blue button-full">Ajouter au panier</button>
-        </div>
-    </div>
-    <div id="successModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="successTitle">
-        <div class="modal-backdrop" data-close-modal></div>
-        <div class="modal-card success-card"><button class="modal-close" data-close-modal aria-label="Fermer">×</button>
-            <div class="success-mark">✓</div>
-            <h2 id="successTitle">Demande confirmée</h2>
-            <p>Votre demande de démonstration a été préparée localement.</p>
-            <div class="confirmation-details">
-                <div><span>Référence</span><strong id="confirmationRef"></strong></div>
-                <div><span>Élève</span><strong id="confirmationStudent"></strong></div>
-                <div><span>Nombre de cours</span><strong id="confirmationCount"></strong></div>
-                <div><span>Total mensuel</span><strong id="confirmationTotal"></strong></div>
-            </div>
-            <p class="privacy-note">Aucune donnée n'a été transmise ni sauvegardée sur un serveur.</p><button
-                id="closeSuccess" class="button button-blue button-full">Fermer</button>
-        </div>
-    </div>
+    
+    
 </body>
 
 </html>
