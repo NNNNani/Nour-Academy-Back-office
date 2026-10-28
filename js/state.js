@@ -1,5 +1,8 @@
 
-import { getInscriptions, saveInscriptions } from "./storage.js";
+import {
+    getInscriptions,
+    saveInscriptions
+} from "./storage.js";
 
 let inscriptions = getInscriptions();
 
@@ -12,20 +15,35 @@ export function setState(newInscriptions) {
     saveInscriptions(inscriptions);
 }
 
-export function addInscription(inscription) {
-    inscriptions = [...inscriptions, inscription];
-    saveInscriptions(inscriptions);
+export function getInscriptionById(id) {
+    return inscriptions.find((item) => item.id === Number(id));
 }
 
 export function updateInscription(id, updatedData) {
-    inscriptions = inscriptions.map((item) =>
-        item.id === id ? { ...item, ...updatedData } : item
+    const inscriptionExiste = inscriptions.some(
+        (item) => item.id === Number(id)
     );
 
-    saveInscriptions(inscriptions);
+    if (!inscriptionExiste) {
+        return false;
+    }
+
+    const nouvellesInscriptions = inscriptions.map((item) =>
+        item.id === Number(id)
+            ? { ...item, ...updatedData }
+            : item
+    );
+
+    setState(nouvellesInscriptions);
+    return true;
+}
+
+export function addInscription(inscription) {
+    setState([...inscriptions, inscription]);
 }
 
 export function deleteInscription(id) {
-    inscriptions = inscriptions.filter((item) => item.id !== id);
-    saveInscriptions(inscriptions);
+    setState(
+        inscriptions.filter((item) => item.id !== Number(id))
+    );
 }
