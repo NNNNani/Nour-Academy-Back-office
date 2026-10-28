@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscriptions | Nour Academy</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+            <a href="./dashboard.html" class="brand">
+                <span class="brand-icon">N</span>
+                <span>Nour Academy</span>
+            </a>
+
+            <p class="sidebar-label">MENU PRINCIPAL</p>
+
+            <nav class="sidebar-nav">
+                <a href="./dashboard.html" class="nav-link">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="./inscriptions.html" class="nav-link active">
+                    <span>▤</span> Inscriptions
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="admin-profile">
+                    <div class="avatar">A</div>
+                    <div>
+                        <strong>Administrateur</strong>
+                        <small>Nour Academy</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">GESTION DES DOSSIERS</p>
+                    <h1>Inscriptions</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <span class="status-dot"></span>
+                    <span>Administration</span>
+                </div>
+            </header>
+
+            <section class="welcome-section">
+                <div>
+                    <h2>Toutes les inscriptions</h2>
+                    <p>Consultez, recherchez et gérez les dossiers des élèves.</p>
+                </div>
+            </section>
+
+            <section class="stats-grid stats-grid-small">
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Total</span>
+                        <span class="stat-icon blue">▤</span>
+                    </div>
+                    <h2 id="total-inscriptions">20</h2>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>En attente</span>
+                        <span class="stat-icon yellow">◷</span>
+                    </div>
+                    <h2 id="pending-inscriptions">6</h2>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Validées</span>
+                        <span class="stat-icon green">✓</span>
+                    </div>
+                    <h2 id="validated-inscriptions">4</h2>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Payées</span>
+                        <span class="stat-icon purple">₫</span>
+                    </div>
+                    <h2 id="paid-inscriptions">10</h2>
+                </article>
+
+            </section>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Liste des dossiers</h3>
+                        <p>Recherchez un élève ou filtrez par statut.</p>
+                    </div>
+                </div>
+
+                <div class="filters">
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input
+                            type="search"
+                            id="search-inscription"
+                            placeholder="Rechercher par élève ou numéro de dossier..."
+                        >
+                    </div>
+
+                    <select id="filter-statut">
+                        <option value="">Tous les statuts</option>
+                        <option value="En attente">En attente</option>
+                        <option value="Validée">Validée</option>
+                        <option value="Payée">Payée</option>
+                    </select>
+
+                    <select id="filter-centre">
+                        <option value="">Tous les centres</option>
+                        <option value="Nador Centre">Nador Centre</option>
+                        <option value="Hay Al Matar">Hay Al Matar</option>
+                        <option value="Selouane">Selouane</option>
+                    </select>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>N° DOSSIER</th>
+                                <th>ÉLÈVE</th>
+                                <th>NIVEAU</th>
+                                <th>COURS</th>
+                                <th>CENTRE</th>
+                                <th>DATE</th>
+                                <th>STATUT</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="inscriptions-table-body">
+                            <tr>
+                                <td>NA001</td>
+                                <td>Exemple élève</td>
+                                <td>2e Bac</td>
+                                <td>Mathématiques</td>
+                                <td>Nador Centre</td>
+                                <td>20/10/2026</td>
+                                <td>
+                                    <span class="badge badge-pending">En attente</span>
+                                </td>
+                                <td>
+                                    <a href="./details.html?id=NA001" class="table-action">
+                                        Détails →
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span id="results-count">Affichage des inscriptions</span>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                © 2026 Nour Academy — Administration
+            </footer>
+
+        </main>
+    </div>
+
+    <script type="module" src="./js/inscriptions.js"></script>
+</body>
+</html>
