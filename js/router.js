@@ -1,4 +1,4 @@
-
+import { renderAddStudent } from "./addStudent.js";
 import { renderDashboard } from "./dashboard.js";
 import { renderInscriptions } from "./inscriptions.js";
 import { renderDetails } from "./details.js";
@@ -94,7 +94,10 @@ export function initRouter(container) {
 
             return;
         }
-
+        if (route === "add-student") {
+            renderAddStudent(container, () => navigate("inscriptions"));
+            return;
+        }
         navigate("dashboard");
     }
 
