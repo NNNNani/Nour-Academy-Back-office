@@ -1,0 +1,2625 @@
+
+
+========== ./index.html ==========
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Administration des inscriptions de Nour Academy à Nador.">
+
+    <title>Nour Academy — Back-office</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="./js/app.js"></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container nav">
+            <a class="brand" href="#dashboard">Nour Academy</a>
+
+            <nav aria-label="Navigation principale">
+                <a href="#dashboard">Tableau de bord</a>
+                <a href="#inscriptions">Dashboard</a>
+            </nav>
+            
+        </div>
+    </header>
+
+    <main class="container" id="app">
+        <section class="page-heading">
+            <p>ESPACE ADMINISTRATION</p>
+            <h1>Gestion des inscriptions</h1>
+            <p>Suivez les dossiers des élèves et leur statut.</p>
+        </section>
+
+        <section id="page-content" aria-live="polite">
+            <p>Chargement de l'application...</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <small>© 2026 Nour Academy Nador</small>
+        </div>
+    </footer>
+</body>
+
+</html>
+
+========== ./css/style.css ==========
+
+/* ===== Back-office components ===== */
+
+.page-heading {
+    padding: 38px 0 18px;
+}
+
+.page-heading > p:first-child {
+    color: var(--blue);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.page-heading h1 {
+    margin: 8px 0;
+    color: var(--navy);
+    line-height: 1.2;
+}
+
+.admin-page {
+    padding: 20px 0 40px;
+}
+
+.section-heading {
+    margin-bottom: 24px;
+}
+
+.section-heading h2 {
+    margin-bottom: 6px;
+    color: var(--navy);
+}
+
+.section-heading p {
+    color: var(--muted);
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin: 24px 0 36px;
+}
+
+.admin-card {
+    min-width: 0;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.admin-card h3 {
+    margin-top: 0;
+    font-size: 0.95rem;
+}
+
+.admin-number {
+    margin-bottom: 0;
+    color: var(--blue);
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.recent-section {
+    margin-top: 32px;
+}
+
+.admin-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 22px 0;
+}
+
+.admin-filters input,
+.admin-filters select,
+.details-form select {
+    min-height: 44px;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+}
+
+.admin-filters input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.admin-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 20px 0;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+}
+
+.admin-table th {
+    background: #f1f5f9;
+    color: var(--navy);
+    font-size: 0.85rem;
+}
+
+.admin-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.admin-page button {
+    min-height: 40px;
+    margin: 5px 5px 5px 0;
+    padding: 10px 16px;
+    color: #fff;
+    background: var(--blue);
+    border: 0;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-page button:hover {
+    filter: brightness(0.94);
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.status-attente {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.status-validee {
+    color: #1d4ed8;
+    background: #dbeafe;
+}
+
+.status-payee {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin: 24px 0;
+}
+
+.details-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.details-form label {
+    width: 100%;
+    font-weight: 700;
+}
+
+.empty-message {
+    padding: 20px;
+    color: var(--muted);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+}
+
+@media (max-width: 850px) {
+    .admin-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-filters {
+        flex-direction: column;
+    }
+
+    .admin-filters input,
+    .admin-filters select,
+    .admin-filters button {
+        width: 100%;
+    }
+
+    .details-form {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .details-form select,
+    .details-form button {
+        width: 100%;
+    }
+}
+
+/* ===== Base styles ===== */
+:root {
+    --navy: #0B1F3A;
+    --blue: #2563EB;
+    --neon: #A3FF4F;
+    --yellow: #F5C451;
+    --light: #F8FAFC;
+    --dark: #080B0A;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --radius: 22px;
+    --shadow: 0 18px 50px rgba(11, 31, 58, .09);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    color: var(--dark);
+    background: var(--light);
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+h1, h2, h3, p {
+    overflow-wrap: anywhere;
+}
+
+.container {
+    width: min(1200px, calc(100% - 40px));
+    margin-inline: auto;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--navy);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(11, 31, 58, .12);
+}
+
+.nav {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.brand {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.nav nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav nav a {
+    color: #e2e8f0;
+    font-weight: 600;
+}
+
+.nav nav a:hover,
+.nav nav a:focus-visible {
+    color: var(--neon);
+}
+
+.footer {
+    padding: 22px 0;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+}
+
+.footer-inner {
+    text-align: center;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--neon);
+    outline-offset: 3px;
+}
+
+.admin-page {
+    min-width: 0;
+}
+
+.section-heading p,
+.page-heading p {
+    color: var(--muted);
+}
+
+.admin-page .admin-card h3 {
+    color: var(--navy);
+}
+
+.admin-page button {
+    transition: filter .2s ease, transform .2s ease;
+}
+
+.admin-page button:hover {
+    transform: translateY(-1px);
+}
+
+.status {
+    white-space: nowrap;
+}
+
+@media (max-width: 650px) {
+    .container {
+        width: min(100% - 28px, 1200px);
+    }
+
+    .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding-block: 14px;
+    }
+
+    .nav nav {
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+
+    .admin-card {
+        padding: 18px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 11px 12px;
+    }
+}
+
+/* ===== Compatibility with the three standalone pages ===== */
+.admin-layout {
+    min-height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    padding: 26px 18px;
+    background: var(--navy);
+    color: #fff;
+}
+
+.sidebar .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 42px;
+}
+
+.brand-icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--neon);
+    color: var(--navy);
+    font-weight: 900;
+}
+
+.sidebar-label {
+    margin: 0 10px 12px;
+    color: #94a3b8;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+}
+
+.sidebar-nav {
+    display: grid;
+    gap: 8px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    color: #dbeafe;
+    font-weight: 600;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    background: var(--neon);
+    color: var(--navy);
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 30px;
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: .85rem;
+}
+
+.admin-profile small {
+    display: block;
+    color: #cbd5e1;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--navy);
+    font-weight: 800;
+}
+
+.main-content {
+    min-width: 0;
+    flex: 1;
+    padding: 30px;
+}
+
+.topbar,
+.welcome-section,
+.panel-header,
+.stat-top,
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.topbar {
+    margin-bottom: 30px;
+}
+
+.topbar h1 {
+    margin: 0;
+    color: var(--navy);
+}
+
+.eyebrow {
+    margin: 0 0 4px;
+    color: var(--blue);
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: .9rem;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #22c55e;
+}
+
+.welcome-section {
+    margin-bottom: 26px;
+}
+
+.welcome-section h2 {
+    margin: 0 0 5px;
+    color: var(--navy);
+}
+
+.welcome-section p,
+.panel-header p,
+.stat-card p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.btn-primary,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 11px 17px;
+    border: 0;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.btn-primary {
+    background: var(--navy);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--blue);
+}
+
+.btn-secondary {
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--navy);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin: 24px 0;
+}
+
+.stats-grid-small {
+    margin-top: 12px;
+}
+
+.stat-card,
+.panel {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow);
+}
+
+.stat-card h2 {
+    margin: 15px 0 4px;
+    color: var(--navy);
+    font-size: 2rem;
+}
+
+.stat-card p {
+    font-size: .85rem;
+}
+
+.stat-icon,
+.quick-icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    font-weight: 800;
+}
+
+.stat-icon.blue { background: #dbeafe; color: #1d4ed8; }
+.stat-icon.yellow { background: #fef3c7; color: #92400e; }
+.stat-icon.green { background: #dcfce7; color: #166534; }
+.stat-icon.purple { background: #ede9fe; color: #6d28d9; }
+
+.content-grid,
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin: 24px 0;
+}
+
+.panel-header {
+    margin-bottom: 20px;
+}
+
+.panel-header h3 {
+    margin: 0 0 5px;
+    color: var(--navy);
+}
+
+.panel-header p {
+    font-size: .9rem;
+}
+
+.chart-placeholder {
+    min-height: 210px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px 10px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.chart-bar {
+    height: 180px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    text-align: center;
+    font-size: .8rem;
+    color: var(--muted);
+}
+
+.chart-bar div {
+    width: min(58px, 80%);
+    min-height: 12px;
+    border-radius: 9px 9px 0 0;
+    background: var(--blue);
+}
+
+.chart-bar:nth-child(2) div { background: var(--yellow); }
+.chart-bar:nth-child(3) div { background: var(--neon); }
+
+.quick-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.quick-action:last-child {
+    border-bottom: 0;
+}
+
+.quick-action > span:nth-child(2) {
+    flex: 1;
+}
+
+.quick-action small {
+    display: block;
+    color: var(--muted);
+}
+
+.quick-icon {
+    background: #eef2ff;
+    color: var(--blue);
+}
+
+.text-link,
+.table-action {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.data-table th,
+.data-table td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+}
+
+.data-table th {
+    background: #f8fafc;
+    color: var(--muted);
+    font-size: .75rem;
+    letter-spacing: .04em;
+}
+
+.data-table td {
+    font-size: .9rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+}
+
+.badge-pending { background: #fef3c7; color: #92400e; }
+.badge-validated { background: #dbeafe; color: #1d4ed8; }
+.badge-paid { background: #dcfce7; color: #166534; }
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filters input,
+.filters select,
+.form-group select {
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+}
+
+.search-box {
+    min-width: 220px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+}
+
+.search-box input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+}
+
+.table-footer,
+.page-footer {
+    padding-top: 18px;
+    color: var(--muted);
+    font-size: .85rem;
+}
+
+.details-list {
+    display: grid;
+    gap: 0;
+}
+
+.detail-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.detail-item span {
+    color: var(--muted);
+}
+
+.payment-card {
+    margin-bottom: 18px;
+    padding: 20px;
+    border-radius: 16px;
+    background: #f1f5f9;
+}
+
+.payment-card span {
+    color: var(--muted);
+}
+
+.payment-card h2 {
+    margin: 8px 0 0;
+    color: var(--navy);
+    font-size: 2rem;
+}
+
+.form-group {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: 700;
+}
+
+.form-group select {
+    width: 100%;
+    max-width: 420px;
+}
+
+.form-message {
+    color: var(--muted);
+}
+
+@media (max-width: 1000px) {
+    .sidebar {
+        width: 210px;
+        flex-basis: 210px;
+    }
+
+    .main-content {
+        padding: 22px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .admin-layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .sidebar .brand {
+        margin-bottom: 18px;
+    }
+
+    .sidebar-bottom,
+    .sidebar-label {
+        display: none;
+    }
+
+    .sidebar-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .main-content {
+        padding: 20px 14px;
+    }
+
+    .content-grid,
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar,
+    .welcome-section {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .filters input,
+    .filters select,
+    .search-box {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 430px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card,
+    .panel {
+        padding: 17px;
+    }
+}
+
+
+========== ./js/ui.js ==========
+
+export function escapeHTML(value) {
+    const characters = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    };
+
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        (character) => characters[character]
+    );
+}
+
+export function renderMessage(container, message) {
+    container.innerHTML = `
+        <p class="empty-message">${escapeHTML(message)}</p>
+    `;
+}
+
+export function formatPrice(price) {
+    return `${Number(price) || 0} DH`;
+}
+
+export function formatDate(date) {
+    if (!date) return "—";
+
+    const parsedDate = new Date(`${date}T00:00:00`);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+        return "—";
+    }
+
+    return new Intl.DateTimeFormat("fr-MA").format(parsedDate);
+}
+
+
+
+========== ./js/export.js ==========
+
+export function exportCSV(inscriptions) {
+    const colonnes = [
+        ["numeroDossier", "N° dossier"],
+        ["eleve", "Élève"],
+        ["niveau", "Niveau"],
+        ["telephoneParent", "Téléphone parent"],
+        ["cours", "Cours"],
+        ["centre", "Centre"],
+        ["prix", "Prix"],
+        ["date", "Date"],
+        ["statut", "Statut"]
+    ];
+
+    function protegerValeur(value) {
+        let texte = String(value ?? "");
+
+        if (/^[=+\-@\t\r]/.test(texte)) {
+            texte = "'" + texte;
+        }
+
+        return `"${texte.replace(/"/g, '""')}"`;
+    }
+
+    const lignes = [
+        colonnes.map((colonne) => protegerValeur(colonne[1])),
+        ...inscriptions.map((item) =>
+            colonnes.map(([cle]) => protegerValeur(item[cle]))
+        )
+    ];
+
+    const contenuCSV = "\uFEFF" +
+        lignes.map((ligne) => ligne.join(";")).join("\r\n");
+
+    const fichier = new Blob(
+        [contenuCSV],
+        { type: "text/csv;charset=utf-8;" }
+    );
+
+    const url = URL.createObjectURL(fichier);
+    const lien = document.createElement("a");
+
+    lien.href = url;
+    lien.download = "nour-academy-inscriptions.csv";
+    document.body.appendChild(lien);
+    lien.click();
+    lien.remove();
+
+    URL.revokeObjectURL(url);
+}
+
+
+========== ./js/router.js ==========
+import { renderDashboard } from "./dashboard.js";
+import { renderInscriptions } from "./inscriptions.js";
+import { renderDetails } from "./details.js";
+
+import {
+    getState,
+    getInscriptionById,
+    updateInscription
+} from "./state.js";
+
+export function initRouter(container) {
+    function navigate(page) {
+        window.location.hash = page;
+    }
+
+    function renderPage() {
+        const route = window.location.hash.slice(1) || "dashboard";
+
+        if (route === "dashboard") {
+            renderDashboard(
+                container,
+                getState(),
+                () => navigate("inscriptions")
+            );
+            return;
+        }
+
+        if (route === "inscriptions") {
+            renderInscriptions(
+                container,
+                getState(),
+                (id) => navigate(`details/${id}`)
+            );
+            return;
+        }
+
+        if (route.startsWith("details/")) {
+            const id = Number(route.split("/")[1]);
+            const inscription = getInscriptionById(id);
+
+            renderDetails(
+                container,
+                inscription,
+                (inscriptionId, changes) => {
+                    const updated = updateInscription(
+                        inscriptionId,
+                        changes
+                    );
+
+                    if (!updated) {
+                        throw new Error("Inscription introuvable.");
+                    }
+
+                    renderPage();
+                },
+                () => navigate("inscriptions")
+            );
+            return;
+        }
+
+        navigate("dashboard");
+    }
+
+    document.querySelectorAll('nav a, .logo').forEach((link) => {
+        link.addEventListener("click", (event) => {
+            const href = link.getAttribute("href");
+
+            if (href?.startsWith("#")) {
+                event.preventDefault();
+                navigate(href.slice(1));
+            }
+        });
+    });
+
+    window.addEventListener("hashchange", renderPage);
+
+    renderPage();
+}
+
+
+========== ./js/addStudent.js ==========
+const students = JSON.parse(window.localStorage.getItem("nourAcademyInscriptions")) 
+
+
+// click
+
+
+let student = {}
+
+let newdata = students.push(student)
+
+
+window.localStorage.setItem("nourAcademyInscriptions", JSON.stringify(newdata))
+
+
+
+//
+function  update(Id, st) {
+    let student;
+    for (let i = 0; i < students.length; i++) {
+        student = students[i]
+
+        if(student.id == Id) {
+            student.status = st
+        }
+        
+    }
+}  
+
+
+
+
+
+
+========== ./js/validation.js ==========
+
+export const STATUTS = [
+    "En attente",
+    "Validée",
+    "Payée"
+];
+
+export function isValidStatus(statut) {
+    return STATUTS.includes(statut);
+}
+
+export function validateInscription(inscription) {
+    const erreurs = [];
+
+    if (!inscription.eleve?.trim()) {
+        erreurs.push("Le nom de l'élève est obligatoire.");
+    }
+
+    if (!inscription.niveau?.trim()) {
+        erreurs.push("Le niveau est obligatoire.");
+    }
+
+    if (!isValidStatus(inscription.statut)) {
+        erreurs.push("Le statut est invalide.");
+    }
+
+    return {
+        valid: erreurs.length === 0,
+        erreurs
+    };
+}
+
+
+========== ./js/state.js ==========
+
+import {
+    getInscriptions,
+    saveInscriptions
+} from "./storage.js";
+
+let inscriptions = getInscriptions();
+
+export function getState() {
+    return inscriptions;
+}
+
+export function setState(newInscriptions) {
+    inscriptions = newInscriptions;
+    saveInscriptions(inscriptions);
+}
+
+export function getInscriptionById(id) {
+    return inscriptions.find((item) => item.id === Number(id));
+}
+
+export function updateInscription(id, updatedData) {
+    const inscriptionExiste = inscriptions.some(
+        (item) => item.id === Number(id)
+    );
+
+    if (!inscriptionExiste) {
+        return false;
+    }
+
+    const nouvellesInscriptions = inscriptions.map((item) =>
+        item.id === Number(id)
+            ? { ...item, ...updatedData }
+            : item
+    );
+
+    setState(nouvellesInscriptions);
+    return true;
+}
+
+export function addInscription(inscription) {
+    setState([...inscriptions, inscription]);
+}
+
+export function deleteInscription(id) {
+    setState(
+        inscriptions.filter((item) => item.id !== Number(id))
+    );
+}
+
+
+========== ./js/inscriptions.js ==========
+
+import { escapeHTML, formatDate, formatPrice } from "./ui.js";
+import { STATUTS } from "./validation.js";
+import { exportCSV } from "./export.js";
+
+export function renderInscriptions(container, inscriptions, onDetails) {
+    container.innerHTML = `
+        <section class="admin-page">
+            <div class="section-heading">
+                <h2>Gestion des inscriptions</h2>
+                <p>Consultez et gérez les dossiers des élèves.</p>
+            </div>
+
+            <div class="admin-filters">
+                <input
+                    id="recherche"
+                    type="search"
+                    placeholder="Rechercher un élève, dossier, téléphone..."
+                    aria-label="Rechercher une inscription"
+                >
+
+                <select id="filtreStatut" aria-label="Filtrer par statut">
+                    <option value="">Tous les statuts</option>
+                    ${STATUTS.map((statut) => `
+                        <option value="${escapeHTML(statut)}">
+                            ${escapeHTML(statut)}
+                        </option>
+                    `).join("")}
+                </select>
+
+                <button id="exporterInscriptions" type="button">
+                    Exporter CSV
+                </button>
+            </div>
+
+            <p id="nombreResultats" aria-live="polite"></p>
+            <div id="tableInscriptions"></div>
+
+            <button id="retourDashboard" type="button">
+                Retour au Dashboard
+            </button>
+        </section>
+    `;
+
+    const recherche = document.getElementById("recherche");
+    const filtreStatut = document.getElementById("filtreStatut");
+    const tableau = document.getElementById("tableInscriptions");
+    const nombreResultats = document.getElementById("nombreResultats");
+
+    function afficherResultats() {
+        const terme = recherche.value.trim().toLowerCase();
+        const statutChoisi = filtreStatut.value;
+
+        const resultats = inscriptions.filter((item) => {
+            const texteRecherche = [
+                item.numeroDossier,
+                item.eleve,
+                item.niveau,
+                item.telephoneParent,
+                item.cours,
+                item.centre
+            ].join(" ").toLowerCase();
+
+            return (
+                texteRecherche.includes(terme) &&
+                (!statutChoisi || item.statut === statutChoisi)
+            );
+        });
+
+        nombreResultats.textContent =
+            `${resultats.length} inscription(s) trouvée(s)`;
+
+        if (!resultats.length) {
+            tableau.innerHTML = "<p>Aucune inscription trouvée.</p>";
+            return;
+        }
+
+        tableau.innerHTML = `
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>N° dossier</th>
+                            <th>Élève</th>
+                            <th>Niveau</th>
+                            <th>Téléphone parent</th>
+                            <th>Centre</th>
+                            <th>Cours</th>
+                            <th>Prix</th>
+                            <th>Date</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        ${resultats.map((item) => `
+                            <tr>
+                                <td>${escapeHTML(item.numeroDossier)}</td>
+                                <td>${escapeHTML(item.eleve)}</td>
+                                <td>${escapeHTML(item.niveau)}</td>
+                                <td>${escapeHTML(item.telephoneParent)}</td>
+                                <td>${escapeHTML(item.centre)}</td>
+                                <td>${escapeHTML(item.cours)}</td>
+                                <td>${escapeHTML(formatPrice(item.prix))}</td>
+                                <td>${escapeHTML(formatDate(item.date))}</td>
+                                <td>
+                                    <span class="status status-${item.statut === "Payée" ? "payee" : item.statut === "Validée" ? "validee" : "attente"}">
+                                        ${escapeHTML(item.statut)}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        data-details="${item.id}"
+                                    >
+                                        Détails
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join("")}
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        tableau.querySelectorAll("[data-details]").forEach((button) => {
+            button.addEventListener("click", () => {
+                onDetails(Number(button.dataset.details));
+            });
+        });
+    }
+
+    recherche.addEventListener("input", afficherResultats);
+    filtreStatut.addEventListener("change", afficherResultats);
+
+    document.getElementById("exporterInscriptions").addEventListener(
+        "click",
+        () => exportCSV(inscriptions)
+    );
+
+    document.getElementById("retourDashboard").addEventListener(
+        "click",
+        () => {
+            window.location.hash = "dashboard";
+        }
+    );
+
+    afficherResultats();
+}
+
+
+========== ./js/details.js ==========
+
+import { escapeHTML, formatDate, formatPrice } from "./ui.js";
+import { STATUTS, isValidStatus } from "./validation.js";
+
+export function renderDetails(
+    container,
+    inscription,
+    onSave,
+    onBack
+) {
+    if (!inscription) {
+        container.innerHTML = `
+            <section class="admin-page">
+                <p>Inscription introuvable.</p>
+                <button id="retourListe" type="button">
+                    Retour aux inscriptions
+                </button>
+            </section>
+        `;
+
+        document.getElementById("retourListe").addEventListener(
+            "click",
+            onBack
+        );
+        return;
+    }
+
+    container.innerHTML = `
+        <section class="admin-page">
+            <div class="section-heading">
+                <h2>Détails de l'inscription</h2>
+                <p>Dossier ${escapeHTML(inscription.numeroDossier)}</p>
+            </div>
+
+            <div class="details-grid">
+                <article class="admin-card">
+                    <h3>Informations de l'élève</h3>
+                    <p><strong>Nom :</strong> ${escapeHTML(inscription.eleve)}</p>
+                    <p><strong>Niveau :</strong> ${escapeHTML(inscription.niveau)}</p>
+                    <p><strong>Cours :</strong> ${escapeHTML(inscription.cours)}</p>
+                    <p><strong>Centre :</strong> ${escapeHTML(inscription.centre)}</p>
+                </article>
+
+                <article class="admin-card">
+                    <h3>Informations du dossier</h3>
+                    <p><strong>Numéro :</strong> ${escapeHTML(inscription.numeroDossier)}</p>
+                    <p><strong>Téléphone parent :</strong> ${escapeHTML(inscription.telephoneParent)}</p>
+                    <p><strong>Date :</strong> ${escapeHTML(formatDate(inscription.date))}</p>
+                    <p><strong>Prix :</strong> ${escapeHTML(formatPrice(inscription.prix))}</p>
+                    <p><strong>Statut actuel :</strong> ${escapeHTML(inscription.statut)}</p>
+                </article>
+            </div>
+
+            <form id="formStatut" class="details-form">
+                <label for="nouveauStatut">Modifier le statut</label>
+
+                <select id="nouveauStatut" required>
+                    ${STATUTS.map((statut) => `
+                        <option
+                            value="${escapeHTML(statut)}"
+                            ${inscription.statut === statut ? "selected" : ""}
+                        >
+                            ${escapeHTML(statut)}
+                        </option>
+                    `).join("")}
+                </select>
+
+                <button type="submit">Enregistrer le statut</button>
+                <button id="retourListe" type="button">
+                    Retour aux inscriptions
+                </button>
+
+                <p id="messageStatut" aria-live="polite"></p>
+            </form>
+        </section>
+    `;
+
+    document.getElementById("retourListe").addEventListener(
+        "click",
+        onBack
+    );
+
+    document.getElementById("formStatut").addEventListener(
+        "submit",
+        (event) => {
+            event.preventDefault();
+
+            const statut = document.getElementById("nouveauStatut").value;
+            const message = document.getElementById("messageStatut");
+
+            if (!isValidStatus(statut)) {
+                message.textContent = "Veuillez choisir un statut valide.";
+                return;
+            }
+
+            try {
+                onSave(inscription.id, { statut });
+                message.textContent = "Statut enregistré avec succès.";
+            } catch (error) {
+                console.error(error);
+                message.textContent = "Erreur lors de l'enregistrement.";
+            }
+        }
+    );
+}
+
+
+========== ./js/dashboard.js ==========
+
+import { escapeHTML, formatDate } from "./ui.js";
+
+export function renderDashboard(container, inscriptions, onNavigate) {
+    const total = inscriptions.length;
+
+    const enAttente = inscriptions.filter(
+        (item) => item.statut === "En attente"
+    ).length;
+
+    const validees = inscriptions.filter(
+        (item) => item.statut === "Validée"
+    ).length;
+
+    const payees = inscriptions.filter(
+        (item) => item.statut === "Payée"
+    ).length;
+
+    const recentes = [...inscriptions]
+        .sort((a, b) => String(b.date).localeCompare(String(a.date)))
+        .slice(0, 5);
+
+    container.innerHTML = `
+        <section class="admin-page">
+            <div class="section-heading">
+                <h2>Dashboard</h2>
+                <p>Bienvenue dans l'espace administration de Nour Academy.</p>
+            </div>
+
+            <div class="admin-stats">
+                <article class="admin-card">
+                    <h3>Total des inscriptions</h3>
+                    <p class="admin-number">${total}</p>
+                </article>
+
+                <article class="admin-card">
+                    <h3>En attente</h3>
+                    <p class="admin-number">${enAttente}</p>
+                </article>
+
+                <article class="admin-card">
+                    <h3>Validées</h3>
+                    <p class="admin-number">${validees}</p>
+                </article>
+
+                <article class="admin-card">
+                    <h3>Payées</h3>
+                    <p class="admin-number">${payees}</p>
+                </article>
+            </div>
+
+            <section class="recent-section">
+                <h3>Dernières inscriptions</h3>
+
+                ${
+                    recentes.length
+                        ? `
+                            <div class="admin-table-wrapper">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Dossier</th>
+                                            <th>Élève</th>
+                                            <th>Date</th>
+                                            <th>Statut</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${recentes.map((item) => `
+                                            <tr>
+                                                <td>${escapeHTML(item.numeroDossier)}</td>
+                                                <td>${escapeHTML(item.eleve)}</td>
+                                                <td>${escapeHTML(formatDate(item.date))}</td>
+                                                <td>${escapeHTML(item.statut)}</td>
+                                            </tr>
+                                        `).join("")}
+                                    </tbody>
+                                </table>
+                            </div>
+                        `
+                        : "<p>Aucune inscription enregistrée.</p>"
+                }
+
+                <button id="voirInscriptions" type="button">
+                    Consulter les inscriptions
+                </button>
+            </section>
+        </section>
+    `;
+
+    document.getElementById("voirInscriptions").addEventListener(
+        "click",
+        onNavigate
+    );
+}
+
+
+========== ./js/app.js ==========
+
+import { initRouter } from "./router.js";
+
+const contenu = document.getElementById("page-content");
+
+if (!contenu) {
+    throw new Error("Élément #page-content introuvable.");
+}
+
+initRouter(contenu);
+
+
+========== ./js/storage.js ==========
+
+import demoData from "../data/demo-data.js";
+
+const STORAGE_KEY = "nourAcademyInscriptions";
+
+export function getInscriptions() {
+    try {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+
+        if (savedData !== null) {
+            const inscriptions = JSON.parse(savedData);
+
+            if (Array.isArray(inscriptions)) {
+                return inscriptions;
+            }
+        }
+    } catch (error) {
+        console.error("Erreur de lecture des inscriptions :", error);
+    }
+
+    const initialData = demoData.map((item) => ({ ...item }));
+    saveInscriptions(initialData);
+
+    return initialData;
+}
+
+export function saveInscriptions(inscriptions) {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(inscriptions));
+    } catch (error) {
+        console.error("Erreur de sauvegarde :", error);
+        throw error;
+    }
+}
+
+export function resetInscriptions() {
+    const initialData = demoData.map((item) => ({ ...item }));
+    saveInscriptions(initialData);
+
+    return initialData;
+}
+
+
+========== ./details.html ==========
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de l'inscription | Nour Academy</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+            <a href="./dashboard.html" class="brand">
+                <span class="brand-icon">N</span>
+                <span>Nour Academy</span>
+            </a>
+
+            <p class="sidebar-label">MENU PRINCIPAL</p>
+
+            <nav class="sidebar-nav">
+                <a href="./dashboard.html" class="nav-link">
+                    <span>▦</span> Tableau de bord
+                </a>
+
+                <a href="./inscriptions.html" class="nav-link active">
+                    <span>▤</span> Dashboard
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="admin-profile">
+                    <div class="avatar">A</div>
+                    <div>
+                        <strong>Administrateur</strong>
+                        <small>Nour Academy</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">GESTION DES DOSSIERS</p>
+                    <h1>Détails de l'inscription</h1>
+                </div>
+
+                <a href="./inscriptions.html" class="btn-secondary">
+                    ← Retour aux inscriptions
+                </a>
+            </header>
+
+            <section class="welcome-section">
+                <div>
+                    <h2 id="detail-eleve-title">Dossier de l'élève</h2>
+                    <p>
+                        Consultez les informations et mettez à jour le statut du dossier.
+                    </p>
+                </div>
+
+                <span id="detail-statut" class="badge badge-pending">
+                    En attente
+                </span>
+            </section>
+
+            <section class="details-grid">
+
+                <article class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Informations de l'élève</h3>
+                            <p>Informations générales du dossier</p>
+                        </div>
+                    </div>
+
+                    <div class="details-list">
+
+                        <div class="detail-item">
+                            <span>Numéro de dossier</span>
+                            <strong id="detail-numero">NA001</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Nom de l'élève</span>
+                            <strong id="detail-eleve">—</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Niveau scolaire</span>
+                            <strong id="detail-niveau">—</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Cours choisi</span>
+                            <strong id="detail-cours">—</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Centre</span>
+                            <strong id="detail-centre">—</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Date d'inscription</span>
+                            <strong id="detail-date">—</strong>
+                        </div>
+
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Informations du paiement</h3>
+                            <p>Montant associé au dossier</p>
+                        </div>
+                    </div>
+
+                    <div class="payment-card">
+                        <span>Montant du cours</span>
+                        <h2 id="detail-prix">— DH</h2>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Téléphone du parent</span>
+                        <strong id="detail-telephone">—</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Statut actuel</span>
+                        <strong id="detail-statut-text">En attente</strong>
+                    </div>
+                </article>
+
+            </section>
+
+            <section class="panel status-panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Mettre à jour le dossier</h3>
+                        <p>Choisissez le statut approprié pour cette inscription.</p>
+                    </div>
+                </div>
+
+                <form id="update-inscription-form">
+
+                    <div class="form-group">
+                        <label for="statut-inscription">Statut de l'inscription</label>
+
+                        <select id="statut-inscription" name="statut" required>
+                            <option value="En attente">En attente</option>
+                            <option value="Validée">Validée</option>
+                            <option value="Payée">Payée</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <a href="./inscriptions.html" class="btn-secondary">
+                            Annuler
+                        </a>
+
+                        <button type="submit" class="btn-primary">
+                            Enregistrer les modifications
+                        </button>
+                    </div>
+
+                    <p id="form-message" class="form-message" aria-live="polite"></p>
+                </form>
+            </section>
+
+            <footer class="page-footer">
+                © 2026 Nour Academy — Administration
+            </footer>
+
+        </main>
+    </div>
+
+    <script type="module" src="./js/details.js"></script>
+</body>
+</html>
+
+
+========== ./inscriptions.html ==========
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscriptions | Nour Academy</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <a href="./dashboard.html" class="brand">
+                <span class="brand-icon">N</span>
+                <span>Nour Academy</span>
+            </a>
+            <p class="sidebar-label">MENU PRINCIPAL</p>
+            <nav class="sidebar-nav">
+                <a href="./dashboard.html" class="nav-link">
+                    <span>▦</span> Tableau de bord
+                </a>
+                <a href="./inscriptions.html" class="nav-link active">
+                    <span>▤</span> Dashboard
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="admin-profile">
+                    <div class="avatar">A</div>
+                    <div>
+                        <strong>Administrateur</strong>
+                        <small>Nour Academy</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">GESTION DES DOSSIERS</p>
+                    <h1>Inscriptions</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <span class="status-dot"></span>
+                    <span>Administration</span>
+                </div>
+            </header>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Liste des dossiers</h3>
+                        <p>Recherchez un élève ou filtrez par statut.</p>
+                    </div>
+                </div>
+                <div class="filters">
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input type="search" id="search-inscription"
+                            placeholder="Rechercher par élève ou numéro de dossier...">
+                    </div>
+
+                    <select id="filter-statut">
+                        <option value="">Tous les statuts</option>
+                        <option value="En attente">En attente</option>
+                        <option value="Validée">Validée</option>
+                        <option value="Payée">Payée</option>
+                    </select>
+
+                    <select id="filter-centre">
+                        <option value="">Tous les centres</option>
+                        <option value="Nador Centre">Nador Centre</option>
+                        <option value="Hay Al Matar">Hay Al Matar</option>
+                        <option value="Selouane">Selouane</option>
+                    </select>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>N° DOSSIER</th>
+                                <th>ÉLÈVE</th>
+                                <th>NIVEAU</th>
+                                <th>COURS</th>
+                                <th>CENTRE</th>
+                                <th>DATE</th>
+                                <th>STATUT</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="inscriptions-table-body">
+                            <tr>
+                                <td>NA001</td>
+                                <td>Exemple élève</td>
+                                <td>2e Bac</td>
+                                <td>Mathématiques</td>
+                                <td>Nador Centre</td>
+                                <td>20/10/2026</td>
+                                <td>
+                                    <span class="badge badge-pending">En attente</span>
+                                </td>
+                                <td>
+                                    <a href="./details.html?id=NA001" class="table-action">
+                                        Détails →
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span id="results-count">Affichage des inscriptions</span>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                © 2026 Nour Academy — Administration
+            </footer>
+
+        </main>
+    </div>
+
+    <script type="module" src="./js/inscriptions.js"></script>
+</body>
+
+</html>
+
+========== ./dashboard.html ==========
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Nour Academy</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+            <a href="./dashboard.html" class="brand">
+                <span class="brand-icon">N</span>
+                <span>Nour Academy</span>
+            </a>
+
+            <p class="sidebar-label">MENU PRINCIPAL</p>
+
+            <nav class="sidebar-nav">
+                <a href="./dashboard.html" class="nav-link active">
+                    <span>▦</span> Tableau de bord
+                </a>
+
+                <a href="./inscriptions.html" class="nav-link">
+                    <span>▤</span> Dashboard
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="admin-profile">
+                    <div class="avatar">A</div>
+                    <div>
+                        <strong>Administrateur</strong>
+                        <small>Nour Academy</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">ESPACE ADMINISTRATION</p>
+                    <h1>Dashboard</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <span class="status-dot"></span>
+                    <span>Administration</span>
+                </div>
+            </header>
+
+            <section class="welcome-section">
+                <div>
+                    <h2>Bonjour, Administrateur 👋</h2>
+                    <p>Voici un aperçu de l'activité de Nour Academy.</p>
+                </div>
+
+                <a href="./inscriptions.html" class="btn-primary">
+                    Voir les inscriptions <span>→</span>
+                </a>
+            </section>
+
+            <section class="stats-grid">
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Total des inscriptions</span>
+                        <span class="stat-icon blue">▤</span>
+                    </div>
+                    <h2 id="total-inscriptions">20</h2>
+                    <p>Tous les dossiers enregistrés</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>En attente</span>
+                        <span class="stat-icon yellow">◷</span>
+                    </div>
+                    <h2 id="pending-inscriptions">6</h2>
+                    <p>Dossiers à traiter</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Validées</span>
+                        <span class="stat-icon green">✓</span>
+                    </div>
+                    <h2 id="validated-inscriptions">4</h2>
+                    <p>Inscriptions validées</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Payées</span>
+                        <span class="stat-icon purple">₫</span>
+                    </div>
+                    <h2 id="paid-inscriptions">10</h2>
+                    <p>Dossiers avec paiement effectué</p>
+                </article>
+
+            </section>
+
+            <section class="content-grid">
+
+                <article class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Répartition des inscriptions</h3>
+                            <p>État des dossiers enregistrés</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-placeholder">
+                        <div class="chart-bar">
+                            <div style="height: 60%"></div>
+                            <span>En attente</span>
+                        </div>
+
+                        <div class="chart-bar">
+                            <div style="height: 40%"></div>
+                            <span>Validées</span>
+                        </div>
+
+                        <div class="chart-bar">
+                            <div style="height: 100%"></div>
+                            <span>Payées</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Actions rapides</h3>
+                            <p>Accès aux fonctionnalités principales</p>
+                        </div>
+                    </div>
+
+                    <a href="./inscriptions.html" class="quick-action">
+                        <span class="quick-icon">▤</span>
+                        <span>
+                            <strong>Consulter les inscriptions</strong>
+                            <small>Afficher tous les dossiers</small>
+                        </span>
+                        <span>→</span>
+                    </a>
+
+                    <a href="./inscriptions.html" class="quick-action">
+                        <span class="quick-icon">⌕</span>
+                        <span>
+                            <strong>Rechercher un élève</strong>
+                            <small>Retrouver un dossier rapidement</small>
+                        </span>
+                        <span>→</span>
+                    </a>
+                </article>
+
+            </section>
+
+            <section class="panel recent-panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Inscriptions récentes</h3>
+                        <p>Les derniers dossiers enregistrés</p>
+                    </div>
+
+                    <a href="./inscriptions.html" class="text-link">
+                        Voir tout →
+                    </a>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>N° DOSSIER</th>
+                                <th>ÉLÈVE</th>
+                                <th>NIVEAU</th>
+                                <th>CENTRE</th>
+                                <th>STATUT</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="recent-inscriptions">
+                            <tr>
+                                <td>NA001</td>
+                                <td>Exemple élève</td>
+                                <td>2e Bac</td>
+                                <td>Nador Centre</td>
+                                <td><span class="badge badge-pending">En attente</span></td>
+                                <td>
+                                    <a href="./details.html?id=NA001" class="table-action">
+                                        Détails →
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                © 2026 Nour Academy — Administration
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
+
+========== ./.vscode/settings.json ==========
+{
+    "liveServer.settings.port": 5501
+}
+
+========== ./data/data.json ==========
+[
+    {
+        "id": 1,
+        "title": "Mathématiques",
+        "subject": "Mathématiques",
+        "level": "2e Bac",
+        "price": 350,
+        "seats": 5,
+        "schedule": "Lundi · 17h–19h",
+        "centre": "Nador Centre",
+        "description": "Renforcez les bases, maîtrisez les méthodes et préparez les examens avec un accompagnement progressif."
+    },
+    {
+        "id": 2,
+        "title": "Physique-Chimie",
+        "subject": "Physique-Chimie",
+        "level": "2e Bac",
+        "price": 400,
+        "seats": 0,
+        "schedule": "Mardi · 17h–19h",
+        "centre": "Hay Al Matar",
+        "description": "Travail guidé sur les notions essentielles, les exercices types et la préparation au baccalauréat."
+    },
+    {
+        "id": 3,
+        "title": "Sciences de la Vie et de la Terre",
+        "subject": "SVT",
+        "level": "2e Bac",
+        "price": 350,
+        "seats": 6,
+        "schedule": "Mercredi · 16h–18h",
+        "centre": "Nador Centre",
+        "description": "Comprenez les concepts de SVT et entraînez-vous à répondre avec méthode aux sujets d'examen."
+    },
+    {
+        "id": 4,
+        "title": "Mathématiques",
+        "subject": "Mathématiques",
+        "level": "1re Bac",
+        "price": 300,
+        "seats": 4,
+        "schedule": "Jeudi · 17h–19h",
+        "centre": "Selouane",
+        "description": "Consolidez les notions du programme et gagnez en confiance grâce à des exercices ciblés."
+    },
+    {
+        "id": 5,
+        "title": "Physique-Chimie",
+        "subject": "Physique-Chimie",
+        "level": "1re Bac",
+        "price": 350,
+        "seats": 3,
+        "schedule": "Samedi · 10h–12h",
+        "centre": "Hay Al Matar",
+        "description": "Apprenez à analyser les problèmes et à appliquer les méthodes de résolution pas à pas."
+    },
+    {
+        "id": 6,
+        "title": "Français",
+        "subject": "Français",
+        "level": "Tronc commun",
+        "price": 250,
+        "seats": 8,
+        "schedule": "Lundi · 16h–17h30",
+        "centre": "Nador Centre",
+        "description": "Améliorez votre expression écrite, votre compréhension et vos compétences en communication."
+    },
+    {
+        "id": 7,
+        "title": "Anglais — Débutant",
+        "subject": "Anglais",
+        "level": "Débutant",
+        "price": 280,
+        "seats": 7,
+        "schedule": "Mardi · 16h–17h30",
+        "centre": "Selouane",
+        "description": "Développez les bases de l'anglais avec des activités pratiques et un rythme progressif."
+    },
+    {
+        "id": 8,
+        "title": "Anglais — Intermédiaire",
+        "subject": "Anglais",
+        "level": "Intermédiaire",
+        "price": 320,
+        "seats": 4,
+        "schedule": "Jeudi · 18h–19h30",
+        "centre": "Nador Centre",
+        "description": "Enrichissez votre vocabulaire et gagnez en aisance à l'oral comme à l'écrit."
+    },
+    {
+        "id": 9,
+        "title": "Français",
+        "subject": "Français",
+        "level": "3e année collège",
+        "price": 250,
+        "seats": 5,
+        "schedule": "Mercredi · 17h–18h30",
+        "centre": "Hay Al Matar",
+        "description": "Préparez le programme du collège et développez une méthode efficace pour les évaluations."
+    },
+    {
+        "id": 10,
+        "title": "Mathématiques",
+        "subject": "Mathématiques",
+        "level": "3e année collège",
+        "price": 280,
+        "seats": 2,
+        "schedule": "Vendredi · 16h–18h",
+        "centre": "Selouane",
+        "description": "Révisez les notions clés et entraînez-vous sur des exercices adaptés à votre niveau."
+    },
+    {
+        "id": 11,
+        "title": "Préparation examen régional",
+        "subject": "Préparation",
+        "level": "3e année collège",
+        "price": 300,
+        "seats": 6,
+        "schedule": "Samedi · 14h–16h",
+        "centre": "Nador Centre",
+        "description": "Un programme de révision structuré pour aborder l'examen régional avec sérénité."
+    },
+    {
+        "id": 12,
+        "title": "Préparation au Baccalauréat",
+        "subject": "Préparation",
+        "level": "2e Bac",
+        "price": 450,
+        "seats": 3,
+        "schedule": "Dimanche · 10h–12h",
+        "centre": "Hay Al Matar",
+        "description": "Des séances de préparation ciblées, des sujets d'entraînement et des conseils de méthode."
+    }
+]
+
+
+========== ./data/demo-data.js ==========
+const demoData = [
+    {
+        id: 1,
+        numeroDossier: "NA001",
+        eleve: "Yassine Amrani",
+        niveau: "2e Bac",
+        cours: "Mathématiques",
+        coursId: 1,
+        telephoneParent: "0600000001",
+        statut: "Payée",
+        date: "2026-10-20",
+        prix: 350,
+        centre: "Nador Centre"
+    },
+    {
+        id: 2,
+        numeroDossier: "NA002",
+        eleve: "Salma Benali",
+        niveau: "2e Bac",
+        cours: "Physique-Chimie",
+        coursId: 2,
+        telephoneParent: "0600000002",
+        statut: "En attente",
+        date: "2026-10-19",
+        prix: 400,
+        centre: "Hay Al Matar"
+    },
+    {
+        id: 3,
+        numeroDossier: "NA003",
+        eleve: "Adam El Idrissi",
+        niveau: "2e Bac",
+        cours: "Sciences de la Vie et de la Terre",
+        coursId: 3,
+        telephoneParent: "0600000003",
+        statut: "Validée",
+        date: "2026-10-18",
+        prix: 350,
+        centre: "Nador Centre"
+    },
+    {
+        id: 4,
+        numeroDossier: "NA004",
+        eleve: "Aya Berrada",
+        niveau: "1re Bac",
+        cours: "Mathématiques",
+        coursId: 4,
+        telephoneParent: "0600000004",
+        statut: "Payée",
+        date: "2026-10-17",
+        prix: 300,
+        centre: "Selouane"
+    },
+    {
+        id: 5,
+        numeroDossier: "NA005",
+        eleve: "Omar Chafai",
+        niveau: "1re Bac",
+        cours: "Physique-Chimie",
+        coursId: 5,
+        telephoneParent: "0600000005",
+        statut: "En attente",
+        date: "2026-10-16",
+        prix: 350,
+        centre: "Hay Al Matar"
+    },
+    {
+        id: 6,
+        numeroDossier: "NA006",
+        eleve: "Meryem Alaoui",
+        niveau: "Tronc commun",
+        cours: "Français",
+        coursId: 6,
+        telephoneParent: "0600000006",
+        statut: "Payée",
+        date: "2026-10-15",
+        prix: 250,
+        centre: "Nador Centre"
+    },
+    {
+        id: 7,
+        numeroDossier: "NA007",
+        eleve: "Hamza Naciri",
+        niveau: "Débutant",
+        cours: "Anglais — Débutant",
+        coursId: 7,
+        telephoneParent: "0600000007",
+        statut: "Validée",
+        date: "2026-10-14",
+        prix: 280,
+        centre: "Selouane"
+    },
+    {
+        id: 8,
+        numeroDossier: "NA008",
+        eleve: "Imane Saidi",
+        niveau: "Intermédiaire",
+        cours: "Anglais — Intermédiaire",
+        coursId: 8,
+        telephoneParent: "0600000008",
+        statut: "Payée",
+        date: "2026-10-13",
+        prix: 320,
+        centre: "Nador Centre"
+    },
+    {
+        id: 9,
+        numeroDossier: "NA009",
+        eleve: "Anas Fathi",
+        niveau: "3e année collège",
+        cours: "Français",
+        coursId: 9,
+        telephoneParent: "0600000009",
+        statut: "En attente",
+        date: "2026-10-12",
+        prix: 250,
+        centre: "Hay Al Matar"
+    },
+    {
+        id: 10,
+        numeroDossier: "NA010",
+        eleve: "Sara Mansouri",
+        niveau: "3e année collège",
+        cours: "Mathématiques",
+        coursId: 10,
+        telephoneParent: "0600000010",
+        statut: "Payée",
+        date: "2026-10-11",
+        prix: 280,
+        centre: "Selouane"
+    },
+    {
+        id: 11,
+        numeroDossier: "NA011",
+        eleve: "Mehdi Karim",
+        niveau: "3e année collège",
+        cours: "Préparation examen régional",
+        coursId: 11,
+        telephoneParent: "0600000011",
+        statut: "Validée",
+        date: "2026-10-10",
+        prix: 300,
+        centre: "Nador Centre"
+    },
+    {
+        id: 12,
+        numeroDossier: "NA012",
+        eleve: "Nour El Houda",
+        niveau: "2e Bac",
+        cours: "Préparation au Baccalauréat",
+        coursId: 12,
+        telephoneParent: "0600000012",
+        statut: "Payée",
+        date: "2026-10-09",
+        prix: 450,
+        centre: "Hay Al Matar"
+    },
+    {
+        id: 13,
+        numeroDossier: "NA013",
+        eleve: "Ilyas Haddad",
+        niveau: "2e Bac",
+        cours: "Mathématiques",
+        coursId: 1,
+        telephoneParent: "0600000013",
+        statut: "En attente",
+        date: "2026-10-08",
+        prix: 350,
+        centre: "Nador Centre"
+    },
+    {
+        id: 14,
+        numeroDossier: "NA014",
+        eleve: "Lina Tazi",
+        niveau: "1re Bac",
+        cours: "Physique-Chimie",
+        coursId: 5,
+        telephoneParent: "0600000014",
+        statut: "Payée",
+        date: "2026-10-07",
+        prix: 350,
+        centre: "Hay Al Matar"
+    },
+    {
+        id: 15,
+        numeroDossier: "NA015",
+        eleve: "Ayoub Rami",
+        niveau: "Débutant",
+        cours: "Anglais — Débutant",
+        coursId: 7,
+        telephoneParent: "0600000015",
+        statut: "Validée",
+        date: "2026-10-06",
+        prix: 280,
+        centre: "Selouane"
+    },
+    {
+        id: 16,
+        numeroDossier: "NA016",
+        eleve: "Hiba Ziani",
+        niveau: "3e année collège",
+        cours: "Français",
+        coursId: 9,
+        telephoneParent: "0600000016",
+        statut: "Payée",
+        date: "2026-10-05",
+        prix: 250,
+        centre: "Hay Al Matar"
+    },
+    {
+        id: 17,
+        numeroDossier: "NA017",
+        eleve: "Rayan Boulahya",
+        niveau: "2e Bac",
+        cours: "Sciences de la Vie et de la Terre",
+        coursId: 3,
+        telephoneParent: "0600000017",
+        statut: "En attente",
+        date: "2026-10-04",
+        prix: 350,
+        centre: "Nador Centre"
+    },
+    {
+        id: 18,
+        numeroDossier: "NA018",
+        eleve: "Malak Fikri",
+        niveau: "Tronc commun",
+        cours: "Français",
+        coursId: 6,
+        telephoneParent: "0600000018",
+        statut: "Payée",
+        date: "2026-10-03",
+        prix: 250,
+        centre: "Nador Centre"
+    },
+    {
+        id: 19,
+        numeroDossier: "NA019",
+        eleve: "Bilal Othmani",
+        niveau: "Intermédiaire",
+        cours: "Anglais — Intermédiaire",
+        coursId: 8,
+        telephoneParent: "0600000019",
+        statut: "En attente",
+        date: "2026-10-02",
+        prix: 320,
+        centre: "Nador Centre"
+    },
+    {
+        id: 20,
+        numeroDossier: "NA020",
+        eleve: "Chaimae Ait Lahcen",
+        niveau: "2e Bac",
+        cours: "Préparation au Baccalauréat",
+        coursId: 12,
+        telephoneParent: "0600000020",
+        statut: "Payée",
+        date: "2026-10-01",
+        prix: 450,
+        centre: "Hay Al Matar"
+    }
+];
+
+export default demoData;

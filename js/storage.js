@@ -1,20 +1,67 @@
 
-const STORAGE_info = "inscriptions";
+import demoData from "../data/demo-data.js";
 
-if (localStorage.getItem(STORAGE_info) === null) {
-    localStorage.setItem(
-        STORAGE_info,
-        JSON.stringify(demoData)
-    );
+const STORAGE_KEY = "nourAcademyInscriptions";
+
+// Charger les données initiales
+function getDemoData() {
+    return demoData.map((item) => ({ ...item }));
 }
 
-function getInscriptions() {
-    return JSON.parse(localStorage.getItem(STORAGE_info));
+// Récupérer les inscriptions depuis localStorage
+export function getInscriptions() {
+    try {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+
+        if (savedData !== null) {
+            const inscriptions = JSON.parse(savedData);
+
+            if (Array.isArray(inscriptions)) {
+                return inscriptions;
+            }
+
+            console.warn("Les données enregistrées sont invalides.");
+        }
+    } catch (error) {
+        console.error(
+            "Erreur de lecture des inscriptions :",
+            error
+        );
+    }
+
+    const initialData = getDemoData();
+
+    saveInscriptions(initialData);
+
+    return initialData;
 }
 
-function saveInscriptions(inscriptions) {
-    localStorage.setItem(
-        STORAGE_info,
-        JSON.stringify(inscriptions)
-    );
+// Sauvegarder les inscriptions
+export function saveInscriptions(inscriptions) {
+    if (!Array.isArray(inscriptions)) {
+        throw new Error("Les données doivent être un tableau.");
+    }
+
+    try {
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(inscriptions)
+        );
+    } catch (error) {
+        console.error(
+            "Erreur de sauvegarde des inscriptions :",
+            error
+        );
+
+        throw error;
+    }
+}
+
+// Réinitialiser les données de démonstration
+export function resetInscriptions() {
+    const initialData = getDemoData();
+
+    saveInscriptions(initialData);
+
+    return initialData;
 }
