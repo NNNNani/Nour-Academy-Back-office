@@ -1,31 +1,47 @@
 
 import { getState, addInscription } from "./state.js";
 import { validateInscription } from "./validation.js";
-import { escapeHTML, formatPrice } from "./ui.js";
 
 export function renderAddStudent(container, onCancel) {
-  const inscriptions = getState();
 
   container.innerHTML = `
     <section class="panel">
+
       <div class="panel-header">
-        <h2>Ajouter une inscription</h2>
-        <p>Remplissez les informations du nouvel étudiant.</p>
+        <div>
+          <h2>Ajouter une inscription</h2>
+          <p>Remplissez les informations du nouvel étudiant.</p>
+        </div>
       </div>
 
       <form id="addStudentForm" class="details-form">
 
         <label for="eleve">Nom complet de l'étudiant</label>
-        <input id="eleve" name="eleve" type="text" required
-          placeholder="Ex : Yassine Amrani">
+        <input
+          id="eleve"
+          name="eleve"
+          type="text"
+          required
+          placeholder="Ex : Yassine Amrani"
+        >
 
         <label for="niveau">Niveau scolaire</label>
-        <input id="niveau" name="niveau" type="text" required
-          placeholder="Ex : 2ème Bac">
+        <input
+          id="niveau"
+          name="niveau"
+          type="text"
+          required
+          placeholder="Ex : 2ème Bac"
+        >
 
         <label for="cours">Cours</label>
-        <input id="cours" name="cours" type="text" required
-          placeholder="Ex : Mathématiques">
+        <input
+          id="cours"
+          name="cours"
+          type="text"
+          required
+          placeholder="Ex : Mathématiques"
+        >
 
         <label for="centre">Centre</label>
         <select id="centre" name="centre" required>
@@ -36,12 +52,23 @@ export function renderAddStudent(container, onCancel) {
         </select>
 
         <label for="telephoneParent">Téléphone du parent</label>
-        <input id="telephoneParent" name="telephoneParent"
-          type="tel" required placeholder="Ex : 06XXXXXXXX">
+        <input
+          id="telephoneParent"
+          name="telephoneParent"
+          type="tel"
+          required
+          placeholder="Ex : 06XXXXXXXX"
+        >
 
         <label for="prix">Prix (DH)</label>
-        <input id="prix" name="prix" type="number"
-          min="0" required placeholder="350">
+        <input
+          id="prix"
+          name="prix"
+          type="number"
+          min="0"
+          required
+          placeholder="350"
+        >
 
         <label for="statut">Statut</label>
         <select id="statut" name="statut" required>
@@ -56,10 +83,12 @@ export function renderAddStudent(container, onCancel) {
           <button type="button" id="cancelAdd" class="btn-secondary">
             Annuler
           </button>
+
           <button type="submit" class="btn-primary">
             Ajouter l'étudiant
           </button>
         </div>
+
       </form>
     </section>
   `;
@@ -67,8 +96,10 @@ export function renderAddStudent(container, onCancel) {
   const form = container.querySelector("#addStudentForm");
   const message = container.querySelector("#formMessage");
 
+  // Retour à la liste
   container.querySelector("#cancelAdd").addEventListener("click", onCancel);
 
+  // Ajouter un étudiant
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -87,6 +118,7 @@ export function renderAddStudent(container, onCancel) {
       date: new Date().toISOString().slice(0, 10)
     };
 
+    // Vérifier les informations
     const validation = validateInscription(student);
 
     if (!validation.valid) {
@@ -94,16 +126,22 @@ export function renderAddStudent(container, onCancel) {
       return;
     }
 
+    // Récupérer les données actuelles
+    const inscriptions = getState();
+
+    // Vérifier les doublons
     const duplicate = inscriptions.some(item =>
       item.eleve.trim().toLowerCase() === student.eleve.toLowerCase() &&
       item.cours.trim().toLowerCase() === student.cours.toLowerCase()
     );
 
     if (duplicate) {
-      message.textContent = "Cet étudiant est déjà inscrit à ce cours.";
+      message.textContent =
+        "Cet étudiant est déjà inscrit à ce cours.";
       return;
     }
 
+    // Vérifier la capacité du groupe
     const groupCount = inscriptions.filter(item =>
       item.cours.trim().toLowerCase() === student.cours.toLowerCase() &&
       item.centre === student.centre &&
@@ -111,17 +149,22 @@ export function renderAddStudent(container, onCancel) {
     ).length;
 
     if (groupCount >= 15) {
-      message.textContent = "Ce groupe a atteint sa capacité maximale de 15 étudiants.";
+      message.textContent =
+        "Ce groupe a atteint sa capacité maximale de 15 étudiants.";
       return;
     }
 
+    // Enregistrer l'inscription
     try {
       addInscription(student);
-      message.textContent = "Inscription ajoutée avec succès !";
-      form.reset();
+
+      alert("Inscription ajoutée avec succès !");
+
       onCancel();
+
     } catch (error) {
-      message.textContent = error.message || "Une erreur est survenue.";
+      message.textContent =
+        error.message || "Une erreur est survenue.";
     }
   });
 }
