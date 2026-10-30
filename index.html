@@ -1,17 +1,16 @@
+
 <!doctype html>
 <html lang="fr">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <meta name="description" content="Administration des inscriptions de Nour Academy à Nador.">
 
     <title>Nour Academy — Back-office</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="./css/style.css">
@@ -19,35 +18,67 @@
 </head>
 
 <body>
-    <header class="site-header">
-        <div class="container nav">
-            <a class="brand" href="#dashboard">Nour Academy</a>
 
-            <nav aria-label="Navigation principale">
-                <a href="#dashboard">Tableau de bord</a>
-                <a href="#inscriptions">Dashboard</a>
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+
+            <a href="#dashboard" class="brand">
+                <span class="brand-icon">N</span>
+                <span>Nour Academy</span>
+            </a>
+
+            <p class="sidebar-label">MENU PRINCIPAL</p>
+
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-link">
+                    <span>▦</span>
+                    Tableau de bord
+                </a>
+
+                <a href="#inscriptions" class="nav-link">
+                    <span>▤</span>
+                    Inscriptions
+                </a>
             </nav>
-            
-        </div>
-    </header>
 
-    <main class="container" id="app">
-        <section class="page-heading">
-            <p>ESPACE ADMINISTRATION</p>
-            <h1>Gestion des inscriptions</h1>
-            <p>Suivez les dossiers des élèves et leur statut.</p>
-        </section>
+            <div class="sidebar-bottom">
+                <div class="admin-profile">
+                    <div class="avatar">A</div>
+                    <div>
+                        <strong>Administrateur</strong>
+                        <small>Nour Academy</small>
+                    </div>
+                </div>
+            </div>
 
-        <section id="page-content" aria-live="polite">
-            <p>Chargement de l'application...</p>
-        </section>
-    </main>
+        </aside>
 
-    <footer class="footer">
-        <div class="container footer-inner">
-            <small>© 2026 Nour Academy Nador</small>
-        </div>
-    </footer>
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">ESPACE ADMINISTRATION</p>
+                    <h1 id="page-title">Tableau de bord</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <span class="status-dot"></span>
+                    <span>Administration</span>
+                </div>
+            </header>
+
+            <section id="page-content" aria-live="polite">
+                <p>Chargement de l'application...</p>
+            </section>
+
+            <footer class="page-footer">
+                © 2026 Nour Academy — Administration
+            </footer>
+
+        </main>
+
+    </div>
+
 </body>
-
 </html>

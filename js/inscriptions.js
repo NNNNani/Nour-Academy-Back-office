@@ -4,52 +4,63 @@ import { STATUTS } from "./validation.js";
 import { exportCSV } from "./export.js";
 
 export function renderInscriptions(container, inscriptions, onDetails) {
+
     container.innerHTML = `
-        <section class="admin-page">
-            <div class="section-heading">
-                <h2>Gestion des inscriptions</h2>
-                <p>Consultez et gérez les dossiers des élèves.</p>
-            </div>
+        <section class="inscriptions-page">
 
-            <div class="admin-filters">
-                <input
-                    id="recherche"
-                    type="search"
-                    placeholder="Rechercher un élève, dossier, téléphone..."
-                    aria-label="Rechercher une inscription"
-                >
+            <section class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Gestion des inscriptions</h2>
+                        <p>Consultez et gérez les dossiers des élèves.</p>
+                    </div>
 
-                <select id="filtreStatut" aria-label="Filtrer par statut">
-                    <option value="">Tous les statuts</option>
-                    ${STATUTS.map((statut) => `
-                        <option value="${escapeHTML(statut)}">
-                            ${escapeHTML(statut)}
-                        </option>
-                    `).join("")}
-                </select>
+                    <button id="exporterInscriptions" class="btn-primary" type="button">
+                        Exporter CSV
+                    </button>
+                </div>
 
-                <button id="exporterInscriptions" type="button">
-                    Exporter CSV
-                </button>
-            </div>
+                <div class="filters">
+                    <input
+                        id="recherche"
+                        type="search"
+                        placeholder="Rechercher un élève, dossier, téléphone..."
+                        aria-label="Rechercher une inscription"
+                    >
 
-            <p id="nombreResultats" aria-live="polite"></p>
-            <div id="tableInscriptions"></div>
+                    <select id="filtreStatut" aria-label="Filtrer par statut">
+                        <option value="">Tous les statuts</option>
+                        ${STATUTS.map((statut) => `
+                            <option value="${escapeHTML(statut)}">
+                                ${escapeHTML(statut)}
+                            </option>
+                        `).join("")}
+                    </select>
 
-            <button id="retourDashboard" type="button">
-                Retour au Dashboard
-            </button>
+                    <select id="triDate" aria-label="Trier par date">
+                        <option value="recent">Plus récent</option>
+                        <option value="ancien">Plus ancien</option>
+                    </select>
+                </div>
+
+                <p id="nombreResultats" aria-live="polite"></p>
+
+                <div id="tableInscriptions"></div>
+            </section>
+
         </section>
     `;
 
-    const recherche = document.getElementById("recherche");
-    const filtreStatut = document.getElementById("filtreStatut");
-    const tableau = document.getElementById("tableInscriptions");
-    const nombreResultats = document.getElementById("nombreResultats");
+    const recherche = container.querySelector("#recherche");
+    const filtreStatut = container.querySelector("#filtreStatut");
+    const triDate = container.querySelector("#triDate");
+    const tableau = container.querySelector("#tableInscriptions");
+    const nombreResultats = container.querySelector("#nombreResultats");
 
     function afficherResultats() {
         const terme = recherche.value.trim().toLowerCase();
         const statutChoisi = filtreStatut.value;
+        const ordre = triDate.value;
 
         const resultats = inscriptions.filter((item) => {
             const texteRecherche = [
@@ -67,17 +78,27 @@ export function renderInscriptions(container, inscriptions, onDetails) {
             );
         });
 
+        resultats.sort((a, b) => {
+            const comparaison = String(a.date).localeCompare(String(b.date));
+
+            return ordre === "recent" ? -comparaison : comparaison;
+        });
+
         nombreResultats.textContent =
             `${resultats.length} inscription(s) trouvée(s)`;
 
-        if (!resultats.length) {
-            tableau.innerHTML = "<p>Aucune inscription trouvée.</p>";
+        if (resultats.length === 0) {
+            tableau.innerHTML = `
+                <p class="empty-state">
+                    Aucune inscription trouvée.
+                </p>
+            `;
             return;
         }
 
         tableau.innerHTML = `
-            <div class="admin-table-wrapper">
-                <table class="admin-table">
+            <div class="table-wrapper">
+                <table class="data-table">
                     <thead>
                         <tr>
                             <th>N° dossier</th>
@@ -104,15 +125,24 @@ export function renderInscriptions(container, inscriptions, onDetails) {
                                 <td>${escapeHTML(item.cours)}</td>
                                 <td>${escapeHTML(formatPrice(item.prix))}</td>
                                 <td>${escapeHTML(formatDate(item.date))}</td>
+
                                 <td>
-                                    <span class="status status-${item.statut === "Payée" ? "payee" : item.statut === "Validée" ? "validee" : "attente"}">
+                                    <span class="badge ${
+                                        item.statut === "Payée"
+                                            ? "badge-success"
+                                            : item.statut === "Validée"
+                                            ? "badge-info"
+                                            : "badge-warning"
+                                    }">
                                         ${escapeHTML(item.statut)}
                                     </span>
                                 </td>
+
                                 <td>
                                     <button
+                                        class="btn-secondary"
                                         type="button"
-                                        data-details="${item.id}"
+                                        data-details="${escapeHTML(item.id)}"
                                     >
                                         Détails
                                     </button>
@@ -133,17 +163,11 @@ export function renderInscriptions(container, inscriptions, onDetails) {
 
     recherche.addEventListener("input", afficherResultats);
     filtreStatut.addEventListener("change", afficherResultats);
+    triDate.addEventListener("change", afficherResultats);
 
-    document.getElementById("exporterInscriptions").addEventListener(
+    container.querySelector("#exporterInscriptions").addEventListener(
         "click",
         () => exportCSV(inscriptions)
-    );
-
-    document.getElementById("retourDashboard").addEventListener(
-        "click",
-        () => {
-            window.location.hash = "dashboard";
-        }
     );
 
     afficherResultats();
